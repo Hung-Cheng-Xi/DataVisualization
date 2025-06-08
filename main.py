@@ -5,7 +5,7 @@ from services import (
 )
 
 
-def _get_mnt_data_path(filename: str) -> str:
+def get_mnt_data_path(filename: str) -> str:
     import os
 
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -14,7 +14,7 @@ def _get_mnt_data_path(filename: str) -> str:
 
 if __name__ == "__main__":
     filename = "三年人數統計.xlsx"
-    path = _get_mnt_data_path(filename=filename)
+    path = get_mnt_data_path(filename=filename)
     records_by_year = read_region_age_records_by_year(path=path)
 
     # show funnel chart data
