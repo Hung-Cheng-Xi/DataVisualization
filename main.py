@@ -1,22 +1,29 @@
-from chart import show_funnel_chart_from_records
-from services import (
-    read_region_age_records_by_year,
-    get_funnel_chart_records,
+from dash import Dash, html, dcc
+import dash
+
+app = Dash(__name__, use_pages=True, suppress_callback_exceptions=True)
+app.title = "資料可視化 - 台灣人口變遷與高齡化趨勢"
+
+app.layout = html.Div(
+    [
+        html.Header(
+            html.H1("台灣人口變遷與高齡化趨勢"),
+            style={"textAlign": "center", "padding": "1rem"},
+        ),
+        html.Nav(
+            [
+                dcc.Link(page["name"], href=page["path"], style={"margin": "0 1rem"})
+                for page in dash.page_registry.values()
+            ],
+            style={
+                "textAlign": "center",
+                "backgroundColor": "#eee",
+                "padding": "0.5rem",
+            },
+        ),
+        dash.page_container,
+    ]
 )
 
-
-def get_mnt_data_path(filename: str) -> str:
-    import os
-
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    return os.path.join(base_dir, "EndTerm", "mnt", "data", filename)
-
-
 if __name__ == "__main__":
-    filename = "三年人數統計.xlsx"
-    path = get_mnt_data_path(filename=filename)
-    records_by_year = read_region_age_records_by_year(path=path)
-
-    # show funnel chart data
-    df_agg = get_funnel_chart_records(records_by_year)
-    show_funnel_chart_from_records(df_agg)
+    app.run(host="0.0.0.0", port=8000, debug=True)
