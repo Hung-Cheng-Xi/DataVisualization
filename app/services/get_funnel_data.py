@@ -1,6 +1,6 @@
-from schema import FunnelRecord
-from services.calculate.calculate_funnel_service import get_funnel_chart_records
-from services.parse import parse_funnel_excel
+from app.schema import FunnelRecord
+from app.services.calculate.calculate_funnel_service import get_funnel_chart_records
+from app.services.parse import parse_funnel_excel
 
 
 def get_funnel_data() -> list[FunnelRecord]:

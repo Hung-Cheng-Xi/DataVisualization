@@ -1,8 +1,8 @@
 import dash
 from dash import html, dcc
 
-from chart import get_life_line_fig_from_records
-from services import get_life_line_data
+from app.chart import get_life_line_fig_from_records
+from app.services import get_life_line_data
 
 
 dash.register_page(__name__, path="/life-line", name="出生死亡線圖")

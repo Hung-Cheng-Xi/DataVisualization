@@ -1,8 +1,8 @@
 import dash
 from dash import html, dcc, Input, Output
 
-from chart import select_map_fig_from_records
-from services.get_map_data import get_map_data
+from app.chart import select_map_fig_from_records
+from app.services.get_map_data import get_map_data
 
 
 dash.register_page(__name__, path="/", name="台灣高齡人口地圖")

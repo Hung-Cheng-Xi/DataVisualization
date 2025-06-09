@@ -1,5 +1,5 @@
-from until import parse_age_label
-from schema import FunnelRecord
+from app.until import parse_age_label
+from app.schema import FunnelRecord
 
 
 def get_funnel_chart_records(records_by_year: dict[str, list]) -> list[FunnelRecord]:

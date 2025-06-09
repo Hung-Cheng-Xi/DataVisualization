@@ -1,21 +1,20 @@
 import pandas as pd
 import plotly.express as px
 from plotly.graph_objects import Figure
-from typing import List, Dict
-from until import parse_age_label
-from schema.funnel_record import FunnelRecord
+from app.until import parse_age_label
+from app.schema import FunnelRecord
 
 
 def get_funnel_figs_from_records(
-    funnel_records: List[FunnelRecord],
-) -> Dict[str, Figure]:
+    funnel_records: list[FunnelRecord],
+) -> dict[str, Figure]:
     """
     接受 FunnelRecord 列表，
     回傳一個 dict: { year_str: Figure }
     """
     df = pd.DataFrame([rec.model_dump() for rec in funnel_records])
 
-    figs: Dict[str, Figure] = {}
+    figs: dict[str, Figure] = {}
     for year in sorted(df["year"].unique()):
         df_year = df[df["year"] == year]
         # 年齡層從大到小排（頂端最大齡、底端最小齡）

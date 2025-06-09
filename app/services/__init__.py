@@ -1,6 +1,6 @@
-from services.get_funnel_data import get_funnel_data
-from .get_line_data import get_life_line_data
-from services.get_map_data import get_map_data
+from app.services.get_funnel_data import get_funnel_data
+from app.services.get_map_data import get_map_data
+from app.services.get_line_data import get_life_line_data
 from .parse.parse_funnel_excel import parse_funnel_excel
 from .calculate.calculate_funnel_service import get_funnel_chart_records
 

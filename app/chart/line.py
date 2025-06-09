@@ -1,5 +1,5 @@
 import pandas as pd
-from schema.life_line_record import LifeLineRecord
+from app.schema import LifeLineRecord
 import plotly.express as px
 from plotly.graph_objects import Figure
 from typing import List

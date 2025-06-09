@@ -1,11 +1,9 @@
 import plotly.express as px
-from plotly.graph_objects import Figure
 import pandas as pd
-
-from schema import MapAreaRecord
-
-
 import geopandas as gpd
+
+from plotly.graph_objects import Figure
+from app.schema import MapAreaRecord
 from shapely.geometry import shape
 
 

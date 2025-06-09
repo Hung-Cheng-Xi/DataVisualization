@@ -1,4 +1,4 @@
-from schema import FunnelRecord
+from app.schema import FunnelRecord
 from .calculate.calculate_line_service import get_life_records
 
 

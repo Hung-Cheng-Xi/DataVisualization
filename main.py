@@ -1,7 +1,12 @@
 from dash import Dash, html, dcc
 import dash
 
-app = Dash(__name__, use_pages=True, suppress_callback_exceptions=True)
+app = Dash(
+    __name__,
+    use_pages=True,
+    pages_folder="app/pages",
+    suppress_callback_exceptions=True,
+)
 app.title = "資料可視化 - 台灣人口變遷與高齡化趨勢"
 
 app.layout = html.Div(

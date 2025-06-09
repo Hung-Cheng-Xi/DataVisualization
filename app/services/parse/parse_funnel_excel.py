@@ -2,7 +2,7 @@ import pandas as pd
 import os
 
 
-from schema import RegionAgeRecord
+from app.schema import RegionAgeRecord
 
 
 def _get_mnt_data_path(filename: str) -> str:

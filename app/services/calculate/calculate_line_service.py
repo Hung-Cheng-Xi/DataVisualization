@@ -1,5 +1,5 @@
 import pandas as pd
-from schema import LifeLineRecord
+from app.schema import LifeLineRecord
 
 
 def get_life_records() -> list[LifeLineRecord]:

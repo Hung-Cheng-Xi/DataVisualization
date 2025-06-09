@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import geopandas as gpd
 
-from schema import MapAreaRecord
+from app.schema import MapAreaRecord
 
 
 def _get_mnt_data_path(filename: str) -> str:

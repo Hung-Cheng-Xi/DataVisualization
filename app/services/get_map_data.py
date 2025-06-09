@@ -1,5 +1,5 @@
-from schema import FunnelRecord
-from services.parse.parse_map_excel import parse_map_data
+from app.schema import FunnelRecord
+from app.services.parse.parse_map_excel import parse_map_data
 
 
 def get_map_data() -> list[FunnelRecord]:

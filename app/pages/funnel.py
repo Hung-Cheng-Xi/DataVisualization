@@ -2,8 +2,8 @@
 
 import dash
 from dash import Input, Output, html, dcc
-from chart.funnel import get_funnel_figs_from_records
-from services import (
+from app.chart.funnel import get_funnel_figs_from_records
+from app.services import (
     parse_funnel_excel,
     get_funnel_chart_records,
 )
