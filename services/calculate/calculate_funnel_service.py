@@ -1,6 +1,4 @@
-from typing import dict, list
-
-from general import parse_age_label
+from until import parse_age_label
 from schema import FunnelRecord
 
 

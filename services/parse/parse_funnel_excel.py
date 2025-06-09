@@ -1,4 +1,3 @@
-from typing import dict, list
 import pandas as pd
 import os
 
@@ -6,15 +5,25 @@ import os
 from schema import RegionAgeRecord
 
 
-def read_region_age_records_by_year(path: str) -> dict[str, list[RegionAgeRecord]]:
+def _get_mnt_data_path(filename: str) -> str:
+    """
+    取得 mnt/data 資料夾下的檔案路徑
+    """
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_dir, "..", "mnt", "data", filename)
+
+
+def parse_funnel_excel(filename: str) -> dict[str, list[RegionAgeRecord]]:
     """
     讀取 Excel 中各年度資料，並依年度分組回傳
     """
+    xls_path = _get_mnt_data_path(filename=filename)
+
     records_by_year: dict[str, list[RegionAgeRecord]] = {}
-    xls = pd.ExcelFile(path, engine="openpyxl")
+    xls = pd.ExcelFile(xls_path, engine="openpyxl")
 
     for sheet in xls.sheet_names:
-        df = pd.read_excel(path, sheet_name=sheet, header=None, engine="openpyxl")
+        df = pd.read_excel(xls_path, sheet_name=sheet, header=None, engine="openpyxl")
         # 偵測 header row
         header_row = df.apply(
             lambda r: any("區域別" in str(c) for c in r)
@@ -23,7 +32,9 @@ def read_region_age_records_by_year(path: str) -> dict[str, list[RegionAgeRecord
             axis=1,
         ).idxmax()
         # 讀取資料
-        df = pd.read_excel(path, sheet_name=sheet, header=header_row, engine="openpyxl")
+        df = pd.read_excel(
+            xls_path, sheet_name=sheet, header=header_row, engine="openpyxl"
+        )
         df.columns = df.columns.astype(str).str.replace("\n", "").str.strip()
         df = df.rename(
             columns={
@@ -61,10 +72,8 @@ def read_region_age_records_by_year(path: str) -> dict[str, list[RegionAgeRecord
 
 
 if __name__ == "__main__":
-    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    xls_path = os.path.join(base_dir, "mnt", "data", "三年人數統計.xlsx")
     # 執行並印出前3筆
-    records_by_year = read_region_age_records_by_year(xls_path)
+    records_by_year = parse_funnel_excel()
     # 只印出第一個年度的前三筆資料
     for year, records in records_by_year.items():
         for rec in records[:3]:
