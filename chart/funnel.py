@@ -1,23 +1,25 @@
-from typing import list
 import pandas as pd
 import plotly.express as px
+from plotly.graph_objects import Figure
+from typing import List, Dict
+from until import parse_age_label
+from schema.funnel_record import FunnelRecord
 
-from general import parse_age_label
-from services.calculate_funnel_service import FunnelRecord
 
-
-def show_funnel_chart_from_records(funnel_records: list[FunnelRecord]):
+def get_funnel_figs_from_records(
+    funnel_records: List[FunnelRecord],
+) -> Dict[str, Figure]:
     """
-    接受 FunnelRecord 列表，並繪製各年度的漏斗金字塔圖
+    接受 FunnelRecord 列表，
+    回傳一個 dict: { year_str: Figure }
     """
-    # 轉為 DataFrame
     df = pd.DataFrame([rec.model_dump() for rec in funnel_records])
 
-    for year in df["year"].unique():
+    figs: Dict[str, Figure] = {}
+    for year in sorted(df["year"].unique()):
         df_year = df[df["year"] == year]
-        sorted_ages = sorted(df_year["age_group"].unique(), key=parse_age_label)
-        # 反轉排列：底部 0 歲，頂部 100+
-        category_order = sorted_ages[::-1]
+        # 年齡層從大到小排（頂端最大齡、底端最小齡）
+        sorted_ages = sorted(df_year["age_group"].unique(), key=parse_age_label)[::-1]
 
         fig = px.funnel(
             df_year,
@@ -26,10 +28,12 @@ def show_funnel_chart_from_records(funnel_records: list[FunnelRecord]):
             color="sex",
             orientation="h",
             title=f"{year} 年人口金字塔",
+            labels={"total": "人口數（人）", "age_group": "年齡層"},
         )
         fig.update_layout(
-            yaxis={"categoryorder": "array", "categoryarray": category_order},
-            xaxis_title="人口數（人）",
-            yaxis_title="年齡層",
+            yaxis={"categoryorder": "array", "categoryarray": sorted_ages},
+            margin={"l": 40, "r": 20, "t": 50, "b": 20},
         )
-        fig.show()
+        figs[year] = fig
+
+    return figs
